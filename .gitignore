@@ -4,8 +4,34 @@
 # Log file
 *.log
 
+### IntelliJ IDEA ###
+.idea
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+=======
+# Eclipse
+.classpath
+.project
+.settings/
+ 
 # BlueJ files
 *.ctxt
+
+# Maven
+log/
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -17,6 +43,9 @@
 *.zip
 *.tar.gz
 *.rar
+
+# Mac
+.DS_Store
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
