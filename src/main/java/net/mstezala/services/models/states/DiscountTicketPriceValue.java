@@ -1,6 +1,4 @@
-package net.mstezala.services.tickets.models.states;
-
-import net.mstezala.services.tickets.models.Ticket;
+package net.mstezala.services.models.states;
 
 import java.math.BigDecimal;
 
