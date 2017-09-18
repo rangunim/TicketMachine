@@ -1,5 +1,6 @@
 package net.mstezala.services.implementations;
 
+import net.mstezala.Helpers.exceptions.CrossMaxNumberException;
 import net.mstezala.services.models.Slots.SlotInfo;
 import net.mstezala.Helpers.TicketMachine;
 import net.mstezala.configurations.MachineConfiguration;
@@ -7,6 +8,7 @@ import net.mstezala.services.MachineService;
 import net.mstezala.services.models.Nominal;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class MachineServiceImpl implements MachineService {
 
@@ -34,6 +36,13 @@ public class MachineServiceImpl implements MachineService {
 
     public void setStandardConfiguration() {
         MachineConfiguration.setStandardMachineConfiguration(ticketMachine);
+    }
+
+    public void addCustomerCoins2MachineCoinSlot() throws CrossMaxNumberException {
+        Map<Nominal, Integer> customerCoins = ticketMachine.getCustomerCoinSlot().getObjectNumber();
+        for (Map.Entry<Nominal, Integer> customerCoin : customerCoins.entrySet()) {
+            ticketMachine.getMachineCoinSlot().add(customerCoin.getKey(), customerCoin.getValue());
+        }
     }
 
     @Override
