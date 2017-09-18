@@ -10,19 +10,9 @@ import java.util.stream.Collectors;
 
 public class CoinSlot extends Slot<Nominal> {
 
-    public Nominal getNominalWithActualLargestCoinNumber() {
-        if (getObjectNumber().isEmpty()) {
-            throw new IllegalArgumentException("CoinSlot is empty");
-        }
-
-        Map.Entry<Nominal, Integer> actualLargestsNominalEntry = getObjectNumber().entrySet().stream().max((n1, n2) -> n1.getValue() - n2.getValue()).get();
-        return actualLargestsNominalEntry.getKey();
-    }
-
     public Collection<Nominal> getNominalTypes() {
         return getObjectNumber().keySet().stream().sorted().collect(Collectors.toList());
     }
-
 
     public BigDecimal sumCoins() {
         BigDecimal result = BigDecimal.ZERO;
