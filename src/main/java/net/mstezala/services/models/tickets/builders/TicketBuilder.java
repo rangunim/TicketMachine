@@ -1,6 +1,6 @@
-package net.mstezala.services.tickets.builders;
+package net.mstezala.services.models.tickets.builders;
 
-import net.mstezala.services.tickets.models.Ticket;
+import net.mstezala.services.models.Ticket;
 
 public abstract class TicketBuilder {
 

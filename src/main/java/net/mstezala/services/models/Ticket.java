@@ -1,15 +1,17 @@
-package net.mstezala.services.tickets.models;
+package net.mstezala.services.models;
 
-import net.mstezala.services.tickets.models.states.DiscountTicketPriceValue;
-import net.mstezala.services.tickets.enums.TicketType;
+import net.mstezala.services.models.states.DiscountTicketPriceValue;
+import net.mstezala.services.models.tickets.enums.TicketType;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Ticket {
     private String name;
     private BigDecimal price;
     private TicketType type;
     private DiscountTicketPriceValue discount;
+
 
     public String getName() {
         return name;
