@@ -1,4 +1,4 @@
-package net.mstezala.services.models.Slots;
+package net.mstezala.services.Slots;
 
 import net.mstezala.services.models.Ticket;
 

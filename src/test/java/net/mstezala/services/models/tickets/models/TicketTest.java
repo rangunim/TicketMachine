@@ -1,9 +1,10 @@
-package net.mstezala.services.tickets.models;
+package net.mstezala.services.models.tickets.models;
 
-import net.mstezala.services.tickets.builders.NormalTicketBuilder;
-import net.mstezala.services.tickets.builders.TicketBuilder;
-import net.mstezala.services.tickets.models.states.Discount35PercentTicketPriceValue;
-import net.mstezala.services.tickets.models.states.DiscountTicketPriceValue;
+import net.mstezala.services.models.Ticket;
+import net.mstezala.services.models.tickets.builders.NormalTicketBuilder;
+import net.mstezala.services.models.tickets.builders.TicketBuilder;
+import net.mstezala.services.models.states.Discount35PercentTicketPriceValue;
+import net.mstezala.services.models.states.DiscountTicketPriceValue;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
 package net.mstezala.configurations;
 
-import net.mstezala.services.models.Slots.CoinSlot;
-import net.mstezala.Helpers.TicketMachine;
-import net.mstezala.Helpers.exceptions.CrossMaxNumberException;
+import net.mstezala.services.Slots.CoinSlot;
+import net.mstezala.helpers.TicketMachine;
+import net.mstezala.helpers.exceptions.CrossMaxNumberException;
 import net.mstezala.services.MachineService;
 import net.mstezala.services.TicketService;
 import net.mstezala.services.models.Nominal;
@@ -16,11 +16,17 @@ public class MachineConfiguration {
     private static MachineService machineService = ApplicationConfiguration.machineService;
     private static TicketService ticketService = ApplicationConfiguration.ticketService;
 
+    /**
+     * Set a standard machine configuration. It contains a nominals (coins) on start in machine a ticket type and number of ticket type on start in machine.
+     * It also set a limit number of each nominal type.
+     *
+     * @param ticketMachine
+     */
     public static void setStandardMachineConfiguration(TicketMachine ticketMachine) {
         try {
             setStandardTicketsList(ticketMachine, 200);
             setStandardCoinsInMachine(ticketMachine);
-        } catch (CrossMaxNumberException e) {
+        } catch (CrossMaxNumberException e) { //Sneaky thrown
             System.err.println(e.getMessage());
         }
     }

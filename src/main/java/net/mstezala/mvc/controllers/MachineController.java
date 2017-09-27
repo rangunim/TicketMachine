@@ -1,6 +1,6 @@
 package net.mstezala.mvc.controllers;
 
-import net.mstezala.Helpers.exceptions.CrossMaxNumberException;
+import net.mstezala.helpers.exceptions.CrossMaxNumberException;
 import net.mstezala.configurations.ApplicationConfiguration;
 import net.mstezala.mvc.models.MachineStateModel;
 import net.mstezala.mvc.models.Model;
@@ -9,7 +9,7 @@ import net.mstezala.mvc.pages.console.Machine.BuyPage;
 import net.mstezala.mvc.pages.console.Shared.CancelBuyPage;
 import net.mstezala.mvc.pages.console.Machine.PrintTicketPage;
 import net.mstezala.services.MachineService;
-import net.mstezala.services.models.Slots.CoinSlot;
+import net.mstezala.services.Slots.CoinSlot;
 import net.mstezala.services.models.Nominal;
 import net.mstezala.services.models.Ticket;
 

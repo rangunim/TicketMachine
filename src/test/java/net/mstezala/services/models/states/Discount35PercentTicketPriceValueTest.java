@@ -1,4 +1,4 @@
-package net.mstezala.services.tickets.models.states;
+package net.mstezala.services.models.states;
 
 import org.junit.Before;
 import org.junit.Test;

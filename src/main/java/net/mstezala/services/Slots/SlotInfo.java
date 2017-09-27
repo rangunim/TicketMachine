@@ -1,4 +1,4 @@
-package net.mstezala.services.models.Slots;
+package net.mstezala.services.Slots;
 
 public class SlotInfo {
     private Slot slot;
