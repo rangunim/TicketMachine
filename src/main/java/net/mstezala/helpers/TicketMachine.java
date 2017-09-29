@@ -44,7 +44,7 @@ public class TicketMachine {
      * @return CoinSlot object which contains nominals which should be returned to customer or null if designate change is impossible or there is no change.
      */
     public CoinSlot getChange(BigDecimal totalPay) { //TODO change returned type to Map<Nominal,Integer>
-        List<Nominal> nominals = machineCoinSlot.getNominalTypes().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        List<Nominal> nominals = machineCoinSlot.getSortedNominalTypes().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
         BigDecimal changeValue = customerCoinSlot.sumCoins().subtract(totalPay).setScale(2, BigDecimal.ROUND_HALF_UP);
         if (changeValue.compareTo(BigDecimal.ZERO) <= 0) {
             return null;

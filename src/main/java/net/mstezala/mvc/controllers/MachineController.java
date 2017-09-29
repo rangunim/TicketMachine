@@ -37,7 +37,7 @@ public class MachineController extends AbstractController {
 
 
     public void buyTicket(Model model) {
-        Collection<Nominal> nominals = machineService.getTicketMachine().getMachineCoinSlot().getNominalTypes();
+        Collection<Nominal> nominals = machineService.getTicketMachine().getMachineCoinSlot().getSortedNominalTypes();
         model.add("nominalTypesMap", convertCollect2Map(nominals.stream().map(x -> x.getValue()).sorted().collect(Collectors.toList())));
         showPage(new BuyPage(model));
         buyTicketPOST(model, getCustomerAction());
@@ -57,8 +57,10 @@ public class MachineController extends AbstractController {
             Map<Integer, BigDecimal> nominalTypesMap = (Map<Integer, BigDecimal>) model.get("nominalTypesMap");
             BigDecimal coin = nominalTypesMap.get(userAction);
             while (coin == null || !isAddedCoinBelowLSlotLimit(coin)) {
+                if (coin != null) {
+                    System.out.println("Slot z nominałami " + coin.setScale(0, BigDecimal.ROUND_HALF_UP).toString() + " PLN pełny.");
+                }
                 userAction = onWrongChoice(nominalTypesMap.size());
-                System.out.println(" lub slot z nominalami " + coin.toString() + " pelny!.");
                 if (userAction == 0) {
                     cancelBuy(model);
                     return;
