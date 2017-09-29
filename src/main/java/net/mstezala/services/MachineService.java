@@ -61,13 +61,6 @@ public interface MachineService {
     CoinSlot getMachineCoinSlot();
 
     /**
-     * Give a reference to ticket Slot field
-     *
-     * @return reference to ticket Slot field
-     */
-    TicketSlot getTicketSlot();
-
-    /**
      * Give a reference to customerCoinSlot field
      *
      * @return reference to customerCoinSlot field
@@ -75,15 +68,7 @@ public interface MachineService {
     CoinSlot getCustomerCoinSlot();
 
     /**
-     * Give a info about tickets (type, number, etc.) on ticket machine.
-     *
-     * @return a info about tickets (type, number, etc.) on ticket machine.
-     */
-    String getInfoAboutTicketsInMachine();
-
-
-    /**
-     * Set a typical(standard) configuration for ticket machine. It contains a set parameteres as like:
+     * Set a typical(standard) configuration for ticket machine. It contains a set parameters as like:
      * number of ticket types in machine,
      * number of nominals in machine,
      * limit a nominals each type in machine,
@@ -91,5 +76,7 @@ public interface MachineService {
      *
      * @see{MachineConfiguration} class.
      */
-    void setStandardConfiguration();
+    void setStandardConfiguration4MachineCoinSlot();
+
+
 }

@@ -8,7 +8,8 @@ public class TicketMachineApplication {
      * @param args
      */
     public static void main(String[] args) {
-        ApplicationConfiguration.machineService.setStandardConfiguration();
+        ApplicationConfiguration.ticketService.setStandardConfiguration4TicketSlot();
+        ApplicationConfiguration.machineService.setStandardConfiguration4MachineCoinSlot();
         ApplicationConfiguration.homeController.index();
     }
 }

@@ -36,12 +36,6 @@ public class MachineServiceImpl implements MachineService {
     private final CoinSlot machineCoinSlot;
 
     /**
-     * The machine ticketSlot slot contains tickets which machine actually have.
-     * It also contains a limit (maximum number) of each ticket which machine can have.
-     */
-    private final TicketSlot ticketSlot;
-
-    /**
      * This field contains only coins (nominals) which customers added to machine.
      */
     private CoinSlot customerCoinSlot;
@@ -51,7 +45,6 @@ public class MachineServiceImpl implements MachineService {
      */
     private MachineServiceImpl() {
         machineCoinSlot = new CoinSlot();
-        ticketSlot = new TicketSlot();
         customerCoinSlot = new CoinSlot();
     }
 
@@ -143,25 +136,7 @@ public class MachineServiceImpl implements MachineService {
     }
 
 
-    /**
-     * Give a reference to ticket Slot field
-     *
-     * @return reference to ticket Slot field
-     */
-    public TicketSlot getTicketSlot() {
-        return ticketSlot;
-    }
 
-
-    /**
-     * Give a info about tickets (type, number, etc.) on ticket machine.
-     *
-     * @return a info about tickets (type, number, etc.) on ticket machine.
-     */
-    @Override
-    public String getInfoAboutTicketsInMachine() {
-        return "\nBilety w maszynie: " + new SlotInfo(ticketSlot).getInfo();
-    }
 
     /**
      * Set a typical(standard) configuration for ticket machine. It contains a set parameters as like:
@@ -172,11 +147,8 @@ public class MachineServiceImpl implements MachineService {
      *
      * @see{MachineConfiguration} class.
      */
-    public void setStandardConfiguration() {
-        MachineConfiguration.setStandardMachineConfiguration(ticketSlot, machineCoinSlot);
+    public void setStandardConfiguration4MachineCoinSlot() {
+        MachineConfiguration.setStandardMachineConfiguration4MachineCoinSlot(machineCoinSlot);
     }
-
-    //TODO rozdzielić TicketSlot i mahcine Slot z tej klasy!.
-    //TODO pomyslec jak zrobic by service nie mial pol!. Przyklad: chcec stworzenia 50 maszyn (wiec potrzeba 50x coinSlot) w obecnej formie sie nie da!.
 
 }

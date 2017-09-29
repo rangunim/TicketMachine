@@ -29,7 +29,7 @@ public class MachineController extends AbstractController {
 
     public void getInfo() {
         MachineStateModel model = new MachineStateModel();
-        model.setInfoAboutTickets(machineService.getInfoAboutTicketsInMachine());
+        model.setInfoAboutTickets(ApplicationConfiguration.ticketService.getInfoAboutTicketsInMachine());
         model.setInfoAboutMachineCoins(machineService.getInfoAboutMachineCoins());
         model.setInfoAboutCustomerCoins(machineService.getInfoAboutCustomerCoins());
         showPage(new TicketMachineStatePage(model));
@@ -106,7 +106,7 @@ public class MachineController extends AbstractController {
                 } catch (CrossMaxNumberException e) {
                     System.err.println(e.getMessage());
                 }
-                machineService.getTicketSlot().remove(chosenTicket, numberTicketChosen);
+                ApplicationConfiguration.ticketService.getTicketSlot().remove(chosenTicket, numberTicketChosen);
                 showPage(new PrintTicketPage(model));
             }
 

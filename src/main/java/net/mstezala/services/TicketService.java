@@ -1,5 +1,6 @@
 package net.mstezala.services;
 
+import net.mstezala.services.Slots.TicketSlot;
 import net.mstezala.services.models.tickets.builders.TicketBuilder;
 import net.mstezala.services.models.Ticket;
 import net.mstezala.services.models.states.DiscountTicketPriceValue;
@@ -49,4 +50,30 @@ public interface TicketService {
      * @param ticket ticket to be set a discount.
      */
     void setStandardValueDiscountTicketPrice(Ticket ticket);
+
+    /**
+     * Give a reference to ticket Slot field
+     *
+     * @return reference to ticket Slot field
+     */
+    TicketSlot getTicketSlot();
+
+    /**
+     * Give a info about tickets (type, number, etc.) on ticket machine.
+     *
+     * @return a info about tickets (type, number, etc.) on ticket machine.
+     */
+    String getInfoAboutTicketsInMachine();
+
+    /**
+     * Set a typical(standard) configuration for ticket machine. It contains a set parameters as like:
+     * number of ticket types in machine,
+     * number of nominals in machine,
+     * limit a nominals each type in machine,
+     * limit a ticket each type in machine.
+     *
+     * @see{MachineConfiguration} class.
+     */
+    void setStandardConfiguration4TicketSlot();
+
 }

@@ -24,8 +24,25 @@ public class MachineConfiguration {
      * @param machineCoinSlot
      */
     public static void setStandardMachineConfiguration(TicketSlot ticketSlot, CoinSlot machineCoinSlot) {
+
         try {
-            setStandardTicketsList(ticketSlot, 2);
+            setStandardTicketsList(ticketSlot, 300);
+            setStandardCoinsInMachine(machineCoinSlot);
+        } catch (CrossMaxNumberException e) { //Sneaky thrown
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void setStandardMachineConfiguration4TicketSlot(TicketSlot ticketSlot) {
+        try {
+            setStandardTicketsList(ticketSlot, 300);
+        } catch (CrossMaxNumberException e) { //Sneaky thrown
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void setStandardMachineConfiguration4MachineCoinSlot(CoinSlot machineCoinSlot) {
+        try {
             setStandardCoinsInMachine(machineCoinSlot);
         } catch (CrossMaxNumberException e) { //Sneaky thrown
             System.err.println(e.getMessage());

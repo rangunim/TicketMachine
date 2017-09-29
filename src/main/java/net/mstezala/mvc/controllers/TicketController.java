@@ -154,7 +154,7 @@ public class TicketController extends AbstractController {
             userAction = onWrongChoice(10);
         }
         Ticket chosenTicket = (Ticket) sessionModel.get("chosenTicket");
-        if (ApplicationConfiguration.machineService.getTicketSlot().getNumber(chosenTicket) < userAction) {
+        if (ApplicationConfiguration.ticketService.getTicketSlot().getNumber(chosenTicket) < userAction) {
             System.out.println("W automacie brakuje biletów " + (chosenTicket.getType().name().equalsIgnoreCase("SINGLE") ? "[Jednorazowy]" : "[Czasowy]") + chosenTicket.getName());
             showPage(new CancelBuyPage());
             sessionModel.clear();
