@@ -15,7 +15,7 @@ public class HomeController extends AbstractController {
         indexPOST(getCustomerAction());
     }
 
-    public void indexPOST(int userAction) {
+    private void indexPOST(int userAction) {
         boolean endLocalLoop = false;
         while (!endLocalLoop) {
             switch (userAction) {

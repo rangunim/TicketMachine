@@ -1,9 +1,9 @@
 package net.mstezala.configurations;
 
 import net.mstezala.services.Slots.CoinSlot;
-import net.mstezala.helpers.TicketMachine;
 import net.mstezala.helpers.exceptions.CrossMaxNumberException;
 import net.mstezala.services.MachineService;
+import net.mstezala.services.Slots.TicketSlot;
 import net.mstezala.services.TicketService;
 import net.mstezala.services.models.Nominal;
 import net.mstezala.services.models.Ticket;
@@ -20,35 +20,35 @@ public class MachineConfiguration {
      * Set a standard machine configuration. It contains a nominals (coins) on start in machine a ticket type and number of ticket type on start in machine.
      * It also set a limit number of each nominal type.
      *
-     * @param ticketMachine
+     * @param ticketSlot
+     * @param machineCoinSlot
      */
-    public static void setStandardMachineConfiguration(TicketMachine ticketMachine) {
+    public static void setStandardMachineConfiguration(TicketSlot ticketSlot, CoinSlot machineCoinSlot) {
         try {
-            setStandardTicketsList(ticketMachine, 200);
-            setStandardCoinsInMachine(ticketMachine);
+            setStandardTicketsList(ticketSlot, 2);
+            setStandardCoinsInMachine(machineCoinSlot);
         } catch (CrossMaxNumberException e) { //Sneaky thrown
             System.err.println(e.getMessage());
         }
     }
 
-    private static void setStandardTicketsList(TicketMachine ticketMachine, int ticketNumber) throws CrossMaxNumberException {
+    private static void setStandardTicketsList(TicketSlot ticketSlot, int ticketNumber) throws CrossMaxNumberException {
         Collection<Ticket> tickets = ticketService.getSingleTypeTickets();
         tickets.addAll(ticketService.getTimeTypeTickets());
 
         for (Ticket ticket : tickets) {
-            ticketMachine.getTicketSlot().add(ticket, ticketNumber);
-            ticketMachine.getTicketSlot().setLimitObjectNumber(ticket, ticketNumber);
+            ticketSlot.add(ticket, ticketNumber);
+            ticketSlot.setLimitObjectNumber(ticket, ticketNumber);
         }
     }
 
-    private static void setStandardCoinsInMachine(TicketMachine ticketMachine) throws CrossMaxNumberException {
-        CoinSlot machineSlot = ticketMachine.getMachineCoinSlot();
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(0.10), 90, 200);
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(0.20), 80, 200);
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(0.50), 70, 200);
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(1.00), 60, 200);
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(2.00), 50, 200);
-        addNominal2MachineSlotWithLimitNumber(machineSlot, BigDecimal.valueOf(5.00), 40, 200);
+    private static void setStandardCoinsInMachine(CoinSlot machineCoinSlot) throws CrossMaxNumberException {
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(0.10), 60, 100);
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(0.20), 50, 100);
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(0.50), 40, 100);
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(1.00), 30, 100);
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(2.00), 20, 100);
+        addNominal2MachineSlotWithLimitNumber(machineCoinSlot, BigDecimal.valueOf(5.00), 10, 100);
     }
 
     private static void addNominal2MachineSlotWithLimitNumber(CoinSlot machineSlot, BigDecimal nominalValue, int nominalNumber2Add, int limitNumber) throws CrossMaxNumberException {

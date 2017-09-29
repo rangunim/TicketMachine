@@ -14,6 +14,7 @@ public class TicketServiceImpl implements TicketService {
      * Constructs a new empty Machine Service. It is use only by SingletonHolder inner class.
      */
     private TicketServiceImpl() {
+
     }
 
     /**

@@ -42,7 +42,7 @@ public class TicketController extends AbstractController {
         chooseTicketTypePOST(getCustomerAction());
     }
 
-    public void chooseTicketTypePOST(int userAction) {
+    private void chooseTicketTypePOST(int userAction) {
         boolean endLocalLoop = false;
         while (!endLocalLoop) {
             switch (userAction) {
@@ -154,7 +154,7 @@ public class TicketController extends AbstractController {
             userAction = onWrongChoice(10);
         }
         Ticket chosenTicket = (Ticket) sessionModel.get("chosenTicket");
-        if (ApplicationConfiguration.machineService.getTicketMachine().getTicketSlot().getNumber(chosenTicket) < userAction) {
+        if (ApplicationConfiguration.machineService.getTicketSlot().getNumber(chosenTicket) < userAction) {
             System.out.println("W automacie brakuje biletów " + (chosenTicket.getType().name().equalsIgnoreCase("SINGLE") ? "[Jednorazowy]" : "[Czasowy]") + chosenTicket.getName());
             showPage(new CancelBuyPage());
             sessionModel.clear();

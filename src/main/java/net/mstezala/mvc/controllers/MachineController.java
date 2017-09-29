@@ -37,7 +37,7 @@ public class MachineController extends AbstractController {
 
 
     public void buyTicket(Model model) {
-        Collection<Nominal> nominals = machineService.getTicketMachine().getMachineCoinSlot().getNominalTypes();
+        Collection<Nominal> nominals = machineService.getMachineCoinSlot().getSortedNominalTypes();
         model.add("nominalTypesMap", convertCollect2Map(nominals.stream().map(x -> x.getValue()).sorted().collect(Collectors.toList())));
         showPage(new BuyPage(model));
         buyTicketPOST(model, getCustomerAction());
@@ -48,27 +48,30 @@ public class MachineController extends AbstractController {
             cancelBuy(model);
             return;
         }
-        BigDecimal addedCoins = machineService.getTicketMachine().getCustomerCoinSlot().sumCoins();
+
+        BigDecimal addedCoins = machineService.getCustomerCoinSlot().sumCoins();
         int numberTicketChosen = (int) model.get("numberTicketChosen");
         Ticket chosenTicket = (Ticket) model.get("chosenTicket");
-
         BigDecimal totalPay = chosenTicket.getPrice().multiply(BigDecimal.valueOf(numberTicketChosen));
+
         if (addedCoins.compareTo(totalPay) < 0) {
             Map<Integer, BigDecimal> nominalTypesMap = (Map<Integer, BigDecimal>) model.get("nominalTypesMap");
             BigDecimal coin = nominalTypesMap.get(userAction);
-            while (coin == null || !isAddedCoinBelowLSlotLimit(coin)) {
+            while (coin == null || !isAddedCoinBelowSlotLimit(coin)) {
+                if (coin != null) {
+                    System.out.println(" Slot z nominalami " + coin.setScale(2, BigDecimal.ROUND_HALF_UP).toString() + " PLN pełny lub");
+                }
                 userAction = onWrongChoice(nominalTypesMap.size());
-                System.out.println(" lub slot z nominalami " + coin.toString() + " pelny!.");
                 if (userAction == 0) {
-                    cancelBuy(model);
+                    buyTicketPOST(model, userAction);
                     return;
                 }
                 coin = nominalTypesMap.get(userAction);
             }
 
             try {
-                machineService.getTicketMachine().getCustomerCoinSlot().add(machineService.createNominal(coin));
-                addedCoins = machineService.getTicketMachine().getCustomerCoinSlot().sumCoins();
+                machineService.getCustomerCoinSlot().add(machineService.createNominal(coin)); //TODO move to SERVICE!!
+                addedCoins = machineService.getCustomerCoinSlot().sumCoins();
                 model.add("addedCoins", addedCoins);
             } catch (CrossMaxNumberException e) {
                 System.err.println(e.getMessage());
@@ -79,10 +82,10 @@ public class MachineController extends AbstractController {
                 buyTicketPOST(model, userAction);
             }
         } else {
-            CoinSlot change = machineService.getTicketMachine().getChange(totalPay);
+            Map<Nominal, Integer> change = machineService.getChange(totalPay);
             if (addedCoins.compareTo(totalPay) > 0) {
-                if (change != null) {
-                    addedCoins = addedCoins.subtract(change.sumCoins());
+                if (change != null && !change.isEmpty()) {
+                    addedCoins = addedCoins.subtract(machineService.sumChangeValue(change));
                 } else {
                     System.out.println("Nie mogę wydać reszty!.");
                     cancelBuy(model);
@@ -92,18 +95,18 @@ public class MachineController extends AbstractController {
             }
 
             if (addedCoins.compareTo(totalPay) == 0) {
-                if (change != null && change.getObjectNumber() != null && !change.getObjectNumber().isEmpty()) {
-                    for (Map.Entry<Nominal, Integer> entry : change.getObjectNumber().entrySet()) {
-                        machineService.getTicketMachine().getMachineCoinSlot().remove(entry.getKey(), entry.getValue());
+                if (change != null && !change.isEmpty()) {
+                    for (Map.Entry<Nominal, Integer> entry : change.entrySet()) {
+                        machineService.getMachineCoinSlot().remove(entry.getKey(), entry.getValue());
                     }
-                    model.add("change", change.getObjectNumber());
+                    model.add("change", change);
                 }
                 try {
                     machineService.addCustomerCoins2MachineCoinSlot();
                 } catch (CrossMaxNumberException e) {
                     System.err.println(e.getMessage());
                 }
-                machineService.getTicketMachine().getTicketSlot().remove(chosenTicket, numberTicketChosen);
+                machineService.getTicketSlot().remove(chosenTicket, numberTicketChosen);
                 showPage(new PrintTicketPage(model));
             }
 
@@ -114,21 +117,21 @@ public class MachineController extends AbstractController {
 
     private void clearBuy(Model model) {
         model.clear();
-        machineService.getTicketMachine().getCustomerCoinSlot().getObjectNumber().clear();
-        machineService.getTicketMachine().getCustomerCoinSlot().getLimitObjectNumber().clear();
+        machineService.getCustomerCoinSlot().getObjectNumber().clear();
+        machineService.getCustomerCoinSlot().getLimitObjectNumber().clear();
     }
 
     private void cancelBuy(Model model) {
-        model.add("customerCoins", machineService.getTicketMachine().getCustomerCoinSlot().getObjectNumber());
+        model.add("customerCoins", machineService.getCustomerCoinSlot().getObjectNumber());
         showPage(new CancelBuyPage(model));
         clearBuy(model);
         back2HomePage();
     }
 
-    private boolean isAddedCoinBelowLSlotLimit(BigDecimal coin) {
-        CoinSlot slot = machineService.getTicketMachine().getMachineCoinSlot();
+    private boolean isAddedCoinBelowSlotLimit(BigDecimal coin) {
+        CoinSlot slot = machineService.getMachineCoinSlot();
         Nominal nominal = machineService.createNominal(coin);
-        return slot.getNumber(nominal) + machineService.getTicketMachine().getCustomerCoinSlot().getNumber(nominal) < slot.getLimitObjectNumber(nominal);
+        return slot.getNumber(nominal) + machineService.getCustomerCoinSlot().getNumber(nominal) < slot.getLimitObjectNumber(nominal);
     }
 
 

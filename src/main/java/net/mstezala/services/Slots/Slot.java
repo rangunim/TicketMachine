@@ -40,8 +40,8 @@ public class Slot<T> {
      * @throws CrossMaxNumberException - it thrown when object number equals a limit of slot object type and try add next object.
      */
     public void add(T object, Integer number2Add) throws CrossMaxNumberException {
-        Integer nominalNumber = getNumber(object);
-        Integer newValue = nominalNumber + number2Add;
+        Integer actualObjectNumber = getNumber(object);
+        Integer newValue = actualObjectNumber + number2Add;
         if (limitObjectNumber.get(object) == null) {
             limitObjectNumber.put(object, Integer.MAX_VALUE);
         }
@@ -96,7 +96,7 @@ public class Slot<T> {
      */
     public void remove(T object, Integer number2Remove) {
         if (object == null) {
-            throw new IllegalArgumentException("Nominal can not be null");
+            throw new IllegalArgumentException("Object can not be null");
         }
         Integer actualValue = getNumber(object);
         if (actualValue < number2Remove) {

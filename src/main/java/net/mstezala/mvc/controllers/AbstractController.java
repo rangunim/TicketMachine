@@ -11,8 +11,11 @@ import java.util.Scanner;
 
 public abstract class AbstractController {
     protected Page lastPage;
-    protected static Scanner scanner4userAction = new Scanner(System.in);
+    protected Scanner scanner4userAction;
 
+    public AbstractController() {
+        scanner4userAction = new Scanner(System.in);
+    }
     protected int getCustomerAction() {
         int action = -1;
         while (action < 0) {
