@@ -1,0 +1,17 @@
+net.mstezala
+net.mstezala.configurations
+net.mstezala.helpers.exceptions
+net.mstezala.mvc.controllers
+net.mstezala.mvc.models
+net.mstezala.mvc.pages
+net.mstezala.mvc.pages.console.Home
+net.mstezala.mvc.pages.console.Machine
+net.mstezala.mvc.pages.console.Shared
+net.mstezala.mvc.pages.console.Ticket
+net.mstezala.services
+net.mstezala.services.Slots
+net.mstezala.services.implementations
+net.mstezala.services.models
+net.mstezala.services.models.states
+net.mstezala.services.models.tickets.builders
+net.mstezala.services.models.tickets.enums
